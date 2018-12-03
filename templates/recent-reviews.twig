@@ -1,0 +1,54 @@
+<div class="card text-center mb-5">
+    <div class="card-body">
+        {% if data.response.beer.beer_label_hd %}
+            <img src="{{ data.response.beer.beer_label_hd }}"/>
+        {% endif %}
+        {% if data.response.beer.brewery.brewery_label %}
+            <img src="{{ data.response.beer.brewery.brewery_label }}"/>
+        {% endif %}
+
+        <h2 class="card-title my-0 py-0">{{ data.response.beer.beer_name }}</h2>
+        <h3 class="card-title my-0 py-0">{{ data.response.beer.brewery.brewery_name }}</h3>
+        <p class="card-text mb-2">{{ data.response.beer.beer_style | raw }}</p>
+
+        <p class="card-text">{{ data.response.beer.beer_description | raw }}</p>
+
+        <ul class="list-unstyled">
+            {% if data.response.beer.beer_abv %}
+                <li>Alcohol Content: {{ data.response.beer.beer_abv }}%</li>
+            {% endif %}
+
+            {% if data.response.beer.beer_ibu %}
+                <li>IBU (Bitterness): {{ data.response.beer.beer_ibu }}</li>
+            {% endif %}
+
+            {% if data.response.beer.rating_score %}
+                <li>Average Rating (out of 5): {{ data.response.beer.rating_score | round(1) }}</li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+{% for checkin in data.response.beer.checkins.items %}
+    {% if loop.index0 < 10 %}
+        <div class="card text-center mb-3">
+            <div class="card-body">
+                {% if checkin.user.user_avatar %}
+                    <img src="{{ checkin.user.user_avatar }}"/>
+                {% endif %}
+                <h5 class="card-title">{{ checkin.user.user_name }} is drinking a {{ data.response.beer.beer_name }}
+                    by {{ data.response.beer.brewery.brewery_name }}</h5>
+
+                <ul class="list-unstyled">
+                    {% if checkin.rating_score %}
+                        <li>Rating (out of 5): {{ checkin.rating_score }}</li>
+                    {% endif %}
+
+                    {% if checkin.created_at %}
+                        <li>Date Reviewed: {{ checkin.created_at | date("F jS \\a\\t g:ia") }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}

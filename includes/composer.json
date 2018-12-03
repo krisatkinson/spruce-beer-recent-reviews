@@ -1,0 +1,12 @@
+{
+    "name": "garrisonbrewery/sprucebeerrecentreviews",
+    "authors": [
+        {
+            "name": "Kris Atkinson",
+            "email": "kris@atkinson.me"
+        }
+    ],
+    "require": {
+        "twig/twig": "^2.0"
+    }
+}
